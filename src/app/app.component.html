@@ -1,9 +1,6 @@
 <div style="text-align: center;">
-
   <h2>Sistema de estudiantes</h2>
   <button type="button" class="btn btn-success" (click)="open(content)">Crear nuevo estudiante</button>
-
-
   <table class="table">
     <thead>
       <tr>
@@ -26,9 +23,6 @@
     </tbody>
   </table>
   <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
-
-
-
   <ng-template #content let-modal>
     <div class="modal-header">
       <h4 class="modal-title" id="modal-basic-title">Estudiante create/update</h4>
@@ -39,26 +33,20 @@
     <div class="modal-body">
       <form>
         <div class="form-group">
-
-
           <form [formGroup]="estudianteForm">
-
             <div class="form-group">
               <label>Id</label>
               <input type="number" formControlName="id" class="form-control">
             </div>
-
             <div class="form-group">
               <label>Nombre</label>
               <input type="text" formControlName="nombre" class="form-control">
             </div>
-
             <div class="form-group">
               <label>Apellido</label>
               <input type="text" formControlName="apellido" class="form-control">
             </div>
           </form>
-
         </div>
       </form>
     </div>
@@ -67,10 +55,4 @@
       <button type="button" class="btn btn-outline-dark" (click)="actualizarEstudiante()" *ngIf="actualizar">Actualizar</button>
     </div>
   </ng-template>
-
-
-
-
-
-
 </div>

@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { FirebaseServiceService } from './services/firebase-service.service';
 import { isNullOrUndefined } from 'util';
-
 
 @Component({
   selector: 'app-root',
@@ -34,22 +31,19 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.idFirabaseActualizar = "";
     this.actualizar = false;
-
+    //configuracion para la paginación
     this.config = {
       itemsPerPage: 5,
       currentPage: 1,
       totalItems: this.collection.data.length
     };
-
-
-
+    //inicializando formulario para guardar los estudiantes
     this.estudianteForm = this.fb.group({
-
       id: ['', Validators.required],
       nombre: ['', Validators.required],
       apellido: ['', Validators.required],
     });
-
+    //cargando todos los estudiantes de firebase
     this.firebaseServiceService.getEstudiantes().subscribe(resp => {
       this.collection.data = resp.map((e: any) => {
         return {
@@ -76,20 +70,15 @@ export class AppComponent implements OnInit {
   }
 
   guardarEstudiante(): void {
-
     this.firebaseServiceService.createEstudiante(this.estudianteForm.value).then(resp => {
       this.estudianteForm.reset();
       this.modalService.dismissAll();
     }).catch(error => {
       console.error(error)
     })
-
-
-
   }
 
   actualizarEstudiante() {
-
     if (!isNullOrUndefined(this.idFirabaseActualizar)) {
       this.firebaseServiceService.updateEstudiante(this.idFirabaseActualizar, this.estudianteForm.value).then(resp => {
         this.estudianteForm.reset();
@@ -98,8 +87,6 @@ export class AppComponent implements OnInit {
         console.error(error);
       });
     }
-
-
   }
 
 
@@ -113,16 +100,12 @@ export class AppComponent implements OnInit {
     });
     this.idFirabaseActualizar = item.idFirebase;
     this.actualizar = true;
-
-
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
-
-
 
   open(content) {
     this.actualizar = false;
@@ -142,7 +125,5 @@ export class AppComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
-
 
 }
